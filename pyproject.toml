@@ -34,3 +34,21 @@ combine_as_imports = true
 lines_between_types = 1
 lines_after_imports = 2
 src_paths = ["src", "tests"]
+
+[tool.flake8]
+extend-exclude = [
+    ".venv",
+    "build",
+]
+max-complexity = 20
+extend-ignore = [
+  "E203",  # whitespace before ':' (conflicts with Black)
+  "E231",  # Bad trailing comma (conflicts with Black)
+  "E501",  # line too long (conflicts with Black)
+  "W503",  # line break before binary operator (conflicts with Black)
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]

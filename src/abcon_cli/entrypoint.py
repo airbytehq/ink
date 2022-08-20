@@ -204,7 +204,7 @@ def _encrypt(passphrase):
             "--symmetric",
             "--cipher-algo",
             "AES256",
-            f"secrets/{secret}"
+            f"secrets/{secret}",
         ]
         subprocess.run(cmd, input=passphrase, encoding="ascii")
 
@@ -232,7 +232,7 @@ def decrypt(passphrase):
             "-o",
             f"secrets/{safe_secret.removesuffix('.gpg')}",
             "--decrypt",
-            f"safe_secrets/{safe_secret}"
+            f"safe_secrets/{safe_secret}",
         ]
         subprocess.run(cmd, input=passphrase, encoding="ascii")
 
@@ -254,3 +254,6 @@ def main():
         cli()
     except Exception as e:
         click.echo(e)
+        return 1
+
+    return 0
