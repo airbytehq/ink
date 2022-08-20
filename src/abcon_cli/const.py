@@ -1,5 +1,6 @@
 import os
 
+
 AIRBYTE_GIT_REPOSITORY = os.environ.get("AIRBYTE_REPOSITORY", "https://github.com/airbytehq/airbyte.git")
 
 PROJECT_PATH = os.getcwd()

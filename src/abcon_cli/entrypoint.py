@@ -1,11 +1,18 @@
+import logging
 import os.path
 import subprocess
 
 import click
-import logging
 
 from abcon_cli.const import PROJECT_FILENAME, PROJECT_PATH
-from abcon_cli.tools import patch_connector, install_airbyte_repo, run_generator, run_pip, get_connector_info, build_connector
+from abcon_cli.tools import (
+    build_connector,
+    get_connector_info,
+    install_airbyte_repo,
+    patch_connector,
+    run_generator,
+    run_pip,
+)
 
 
 @click.group()

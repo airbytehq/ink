@@ -1,13 +1,21 @@
+import fileinput
+import logging
 import os
 import shutil
 import subprocess
-import logging
-import fileinput
 
-import yaml
 from dataclasses import dataclass
 
-from abcon_cli.const import BUILD_DIRNAME, AIRBYTE_PROJECT_PATH, AIRBYTE_GIT_REPOSITORY, BUILD_PATH, PROJECT_PATH, PROJECT_FILENAME
+import yaml
+
+from abcon_cli.const import (
+    AIRBYTE_GIT_REPOSITORY,
+    AIRBYTE_PROJECT_PATH,
+    BUILD_DIRNAME,
+    BUILD_PATH,
+    PROJECT_FILENAME,
+    PROJECT_PATH,
+)
 
 
 @dataclass
@@ -31,7 +39,7 @@ def patch_connector():
     with open(".python-version", "w") as f:
         f.writelines(["3.9.0"])
 
-    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), ".")
+    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), "")
 
     if os.path.exists("requirements.txt"):
         with fileinput.input(files=["requirements.txt"], inplace=True) as f:
