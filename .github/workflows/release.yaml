@@ -1,11 +1,9 @@
 name: release
 
-#on:
-#  push:
-#    tags:
-#      - '*.*.*'
-
-on: [push]
+on:
+  push:
+    tags:
+      - '*.*.*'
 
 env:
   REGISTRY: ghcr.io
@@ -54,12 +52,12 @@ jobs:
 #          docker build . -t abcon-cli:$(poetry version -s) --build-arg PYTHON_VERSION=$(cat .python-version)
 #          docker build . -t abcon-cli --build-arg PYTHON_VERSION=$(cat .python-version)
 #
-#      - name: Create Release
-#        uses: ncipollo/release-action@v1
-#        with:
-#          artifacts: "dist/*,abcon,_abcon"
-#          draft: false
-#          prerelease: false
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*,abcon,_abcon"
+          draft: false
+          prerelease: false
 #
 #      - name: Publish to PyPI
 #        env:
