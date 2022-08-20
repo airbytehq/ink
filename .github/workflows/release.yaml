@@ -22,6 +22,11 @@ jobs:
       - name: Build project for distribution
         run: poetry build
 
+      - name: Create Docker image
+        run:  |
+          docker build . -t abcon-cli:$(poetry version -s) --build-arg PYTHON_VERSION=$(cat .python-version)
+          docker build . -t abcon-cli --build-arg PYTHON_VERSION=$(cat .python-version)
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:

@@ -2,9 +2,12 @@
 
 set -eo pipefail
 
-[[ "$DEBUG" = "true" ]] && set -x
+[[ -z "$DEBUG" ]] || set -x
 
 ABCON_PACKAGE="${ABCON_PACKAGE:-abcon}"
+ABCON_DOCKER="${ABCON_DOCKER:-airbyte/abcon-cli}"
+
+VENV_PATH=${VENV_PATH:-.venv}
 
 PYTHON_DEFAULT=$(which python || which python3)
 PYTHON_CMD="${PYTHON_CMD:-${PYTHON_DEFAULT}}"
@@ -14,22 +17,25 @@ _error() {
 }
 
 _setup_env() {
-    if [[ ! -d .venv ]]; then
-      "${PYTHON_CMD}" -m venv ".venv"
-      source ".venv/bin/activate"
+    if [[ ! -d "${VENV_PATH}" ]]; then
+      "${PYTHON_CMD}" -m venv "${VENV_PATH}"
+      source "${VENV_PATH}/bin/activate"
 
       pip install --upgrade pip
       pip install -e "${ABCON_PACKAGE}"
     else
-      source ".venv/bin/activate"
+      source "${VENV_PATH}/bin/activate"
     fi
 
 }
 
 main() {
-    _setup_env
-
-    abcon-cli "$@"
+    if [[ -z "$USE_ABCON_DOCKER" ]]; then
+      _setup_env
+      abcon-cli "$@"
+    else
+      docker run --rm -v $(pwd):/stage "$ABCON_DOCKER" "$@"
+    fi
 }
 
 main "$@"

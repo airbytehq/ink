@@ -2,14 +2,18 @@
 
 set -eo pipefail
 
+set -a
+ENV_PATH=${ENV_PATH:-.env}
+[[ -f "${ENV_PATH}" ]] && source "${ENV_PATH}"
+set +a
+
+[[ -z "$DEBUG" ]] || set -x
+
 DEV_VERSION=${DEV_VERSION:-latest}
 ABCON_URL=${ABCON_URL:-https://tools.airbyte.com/${DEV_VERSION}/abcon}
+
 BUILD_DIR="build"
 ABCON_CMD="$BUILD_DIR/_abcon"
-
-set -a
-[[ -f .env ]] && source .env
-set +a
 
 _error() {
     echo "$@" 1>&2 && exit 1
