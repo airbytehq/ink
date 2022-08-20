@@ -1,13 +1,21 @@
+import fileinput
+import logging
 import os
 import shutil
 import subprocess
-import logging
-import fileinput
 
-import yaml
 from dataclasses import dataclass
 
-from abcon_cli.const import BUILD_DIRNAME, AIRBYTE_PROJECT_PATH, AIRBYTE_GIT_REPOSITORY, BUILD_PATH, PROJECT_PATH, PROJECT_FILENAME
+import yaml
+
+from abcon_cli.const import (
+    AIRBYTE_GIT_REPOSITORY,
+    AIRBYTE_PROJECT_PATH,
+    BUILD_DIRNAME,
+    BUILD_PATH,
+    PROJECT_FILENAME,
+    PROJECT_PATH,
+)
 
 
 @dataclass
@@ -31,7 +39,7 @@ def patch_connector():
     with open(".python-version", "w") as f:
         f.writelines(["3.9.0"])
 
-    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), ".")
+    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), "")
 
     if os.path.exists("requirements.txt"):
         with fileinput.input(files=["requirements.txt"], inplace=True) as f:
@@ -56,11 +64,11 @@ def run_generator():
     generator_path = os.path.join(AIRBYTE_PROJECT_PATH, "airbyte-integrations", "connector-templates", "generator")
     res = subprocess.run(["./generate.sh"], cwd=generator_path)
     if res.returncode > 0:
-        raise Exception(f"Failed to use connector generator")
+        raise Exception("Failed to use connector generator")
 
     res = subprocess.run(["git", "status", "--porcelain"], cwd=AIRBYTE_PROJECT_PATH, capture_output=True, text=True)
     if res.returncode > 0:
-        raise Exception(f"Failed identify generated connector")
+        raise Exception("Failed identify generated connector")
     raw_paths = [os.path.join(AIRBYTE_PROJECT_PATH, os.path.normpath(p[3:])) for p in res.stdout.splitlines()]
     filtered_paths = []
     for p in raw_paths:
@@ -69,7 +77,7 @@ def run_generator():
             filtered_paths.append(p)
 
     if len(filtered_paths) != 1:
-        raise Exception(f"Airbyte project is not in a good state, found following paths: {filtered_paths}")
+        raise Exception("Airbyte project is not in a good state, found following paths: {filtered_paths}")
 
     generated_path = filtered_paths.pop()
     logging.debug(f"Generated connector path: {generated_path}")
@@ -100,7 +108,7 @@ def run_pip(*args):
     cmd.extend(args)
     res = subprocess.run(cmd)
     if res.returncode > 0:
-        raise Exception(f"Failed run pip")
+        raise Exception("Failed run pip")
 
 
 def build_connector(image_name, tag):

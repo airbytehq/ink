@@ -1,11 +1,18 @@
+import logging
 import os.path
 import subprocess
 
 import click
-import logging
 
 from abcon_cli.const import PROJECT_FILENAME, PROJECT_PATH
-from abcon_cli.tools import patch_connector, install_airbyte_repo, run_generator, run_pip, get_connector_info, build_connector
+from abcon_cli.tools import (
+    build_connector,
+    get_connector_info,
+    install_airbyte_repo,
+    patch_connector,
+    run_generator,
+    run_pip,
+)
 
 
 @click.group()
@@ -197,7 +204,7 @@ def _encrypt(passphrase):
             "--symmetric",
             "--cipher-algo",
             "AES256",
-            f"secrets/{secret}"
+            f"secrets/{secret}",
         ]
         subprocess.run(cmd, input=passphrase, encoding="ascii")
 
@@ -225,7 +232,7 @@ def decrypt(passphrase):
             "-o",
             f"secrets/{safe_secret.removesuffix('.gpg')}",
             "--decrypt",
-            f"safe_secrets/{safe_secret}"
+            f"safe_secrets/{safe_secret}",
         ]
         subprocess.run(cmd, input=passphrase, encoding="ascii")
 
@@ -247,3 +254,6 @@ def main():
         cli()
     except Exception as e:
         click.echo(e)
+        return 1
+
+    return 0
