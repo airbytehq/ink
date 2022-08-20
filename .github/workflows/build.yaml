@@ -56,6 +56,17 @@ jobs:
       - name: Run pytest
         run: poetry run pytest
 
+      - name: Build project for distribution
+        run: poetry build
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: false
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          build-args: PYTHON_VERSION=3.9.0
+
       - name: Check for clean working tree
         run: |
           git diff --exit-code --stat HEAD
