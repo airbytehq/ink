@@ -1,0 +1,36 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Build project for distribution
+        run: poetry build
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false
+
+#      - name: Publish to PyPI
+#        env:
+#          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+#        run: poetry publish
