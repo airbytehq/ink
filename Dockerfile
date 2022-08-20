@@ -1,8 +1,8 @@
 ARG PYTHON_VERSION
 
-LABEL org.opencontainers.image.source="https://github.com/michel-tricot/abcon"
-
 FROM python:${PYTHON_VERSION}-slim
+
+LABEL org.opencontainers.image.source="https://github.com/michel-tricot/abcon"
 
 RUN \
     apt-get update && \
