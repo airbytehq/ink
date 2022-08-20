@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -eo pipefail
+
+[[ "$DEBUG" = "true" ]] && set -x
+
+ABCON_PACKAGE="${ABCON_PACKAGE:-abcon}"
+
+PYTHON_DEFAULT=$(which python || which python3)
+PYTHON_CMD="${PYTHON_CMD:-${PYTHON_DEFAULT}}"
+
+_error() {
+    echo "$@" 1>&2 && exit 1
+}
+
+_setup_env() {
+    if [[ ! -d .venv ]]; then
+      "${PYTHON_CMD}" -m venv ".venv"
+      source ".venv/bin/activate"
+
+      pip install --upgrade pip
+      pip install -e "${ABCON_PACKAGE}"
+    else
+      source ".venv/bin/activate"
+    fi
+
+}
+
+main() {
+    _setup_env
+
+    abcon-cli "$@"
+}
+
+main "$@"
