@@ -9,8 +9,7 @@ on:
       - '**'
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  TEST_IMAGE: ink
 
 jobs:
   build:
@@ -36,11 +35,12 @@ jobs:
         id: cache
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-ink-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Ensure cache is healthy
         if: steps.cache.outputs.cache-hit == 'true'
-        run: timeout 10s poetry run pip --version || rm -rf .venv
+        run: |
+          timeout 10s poetry run pip --version || rm -rf .venv
 
       - name: Install dependencies
         run: poetry install
@@ -60,16 +60,21 @@ jobs:
       - name: Run pytest
         run: poetry run pytest
 
-      - name: Build project for distribution
-        run: poetry build
+      - name: Gather project metadata
+        id: metadata
+        run: |
+          echo ::set-output name=python_version::$(cat .python-version);
+          echo ::set-output name=ink_version::$(poetry version -s);
 
       - name: Build Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
           push: false
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          build-args: PYTHON_VERSION=3.9.0
+          tags: ${{ env.TEST_IMAGE }}
+          build-args: PYTHON_VERSION=${{ steps.metadata.outputs.python_version }}
+
+      - name: Test Docker image
+        run: docker run --rm ${{ env.TEST_IMAGE }}
 
       - name: Check for clean working tree
         run: |
