@@ -35,11 +35,13 @@ jobs:
         id: cache
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-ink-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Ensure cache is healthy
         if: steps.cache.outputs.cache-hit == 'true'
-        run: timeout 10s poetry run pip --version || rm -rf .venv
+        run: |
+          find . .venv
+          timeout 10s poetry run pip --version || rm -rf .venv
 
       - name: Install dependencies
         run: poetry install
