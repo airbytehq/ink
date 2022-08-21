@@ -62,8 +62,8 @@ jobs:
       - name: Gather project metadata
         id: metadata
         run: |
-          echo ::set-output python_version=$(cat .python-version);
-          echo ::set-output ink_version=$(poetry version -s);
+          echo ::set-output name=python_version::$(cat .python-version);
+          echo ::set-output name=ink_version::$(poetry version -s);
 
       - name: Build Docker image
         uses: docker/build-push-action@v3

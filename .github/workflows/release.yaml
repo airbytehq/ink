@@ -29,8 +29,8 @@ jobs:
       - name: Gather project metadata
         id: metadata
         run: |
-          echo ::set-output python_version=$(cat .python-version);
-          echo ::set-output ink_version=$(poetry version -s);
+          echo ::set-output name=python_version::$(cat .python-version);
+          echo ::set-output name=ink_version::$(poetry version -s);
         
       - name: Log in to the Container Registry
         uses: docker/login-action@v2
