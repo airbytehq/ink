@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "abcon-cli"
+name = "ink"
 version = "0.1.1"
 description = "Connector management CLI"
 authors = ["Michel Tricot <michel@airbyte.io>"]
@@ -17,7 +17,7 @@ isort = "^5.10.1"
 pyproject-flake8 = "^0.0.1-alpha.5"
 
 [tool.poetry.scripts]
-abcon-cli = "abcon_cli.entrypoint:main"
+ink = "ink.entrypoint:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

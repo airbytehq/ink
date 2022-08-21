@@ -2,7 +2,7 @@ ARG PYTHON_VERSION
 
 FROM python:${PYTHON_VERSION}-slim
 
-LABEL org.opencontainers.image.source="https://github.com/michel-tricot/abcon"
+LABEL org.opencontainers.image.source="https://github.com/michel-tricot/ink"
 
 RUN \
     apt-get update && \
@@ -17,8 +17,8 @@ COPY . /app
 WORKDIR /stage
 
 ENV ENV_PATH="/dev/null"
-ENV ABCON_URL="file:///app/_abcon"
-ENV ABCON_PACKAGE="/app"
+ENV INK_URL="file:///app/_ink"
+ENV INK_PACKAGE="/app"
 ENV VENV_PATH="build/.venv_docker"
 
-ENTRYPOINT ["/app/abcon"]
+ENTRYPOINT ["/app/ink"]
