@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ink"
-version = "0.2.0"
+version = "0.3.0"
 description = "Connector management CLI"
 authors = ["Michel Tricot <michel@airbyte.io>"]
 license = "MIT"
