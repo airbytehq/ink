@@ -4,8 +4,8 @@ import subprocess
 
 import click
 
-from abcon_cli.const import PROJECT_FILENAME, PROJECT_PATH
-from abcon_cli.tools import (
+from ink.const import PROJECT_FILENAME, PROJECT_PATH
+from ink.tools import (
     build_connector,
     get_connector_info,
     install_airbyte_repo,

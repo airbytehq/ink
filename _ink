@@ -4,8 +4,8 @@ set -eo pipefail
 
 [[ -z "$DEBUG" ]] || set -x
 
-ABCON_PACKAGE="${ABCON_PACKAGE:-abcon}"
-ABCON_DOCKER="${ABCON_DOCKER:-airbyte/abcon-cli}"
+INK_PACKAGE="${INK_PACKAGE:-ink}"
+INK_DOCKER="${INK_DOCKER:-airbyte/ink}"
 
 VENV_PATH=${VENV_PATH:-.venv}
 
@@ -22,7 +22,7 @@ _setup_env() {
       source "${VENV_PATH}/bin/activate"
 
       pip install --upgrade pip
-      pip install -e "${ABCON_PACKAGE}"
+      pip install -e "${INK_PACKAGE}"
     else
       source "${VENV_PATH}/bin/activate"
     fi
@@ -30,11 +30,11 @@ _setup_env() {
 }
 
 main() {
-    if [[ -z "$USE_ABCON_DOCKER" ]]; then
+    if [[ -z "$USE_INK_DOCKER" ]]; then
       _setup_env
-      abcon-cli "$@"
+      ink "$@"
     else
-      docker run --rm -v $(pwd):/stage "$ABCON_DOCKER" "$@"
+      docker run --rm -v $(pwd):/stage "$INK_DOCKER" "$@"
     fi
 }
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 import yaml
 
-from abcon_cli.const import (
+from ink.const import (
     AIRBYTE_GIT_REPOSITORY,
     AIRBYTE_PROJECT_PATH,
     BUILD_DIRNAME,
