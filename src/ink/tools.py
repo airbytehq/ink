@@ -15,6 +15,7 @@ from ink.const import (
     BUILD_PATH,
     PROJECT_FILENAME,
     PROJECT_PATH,
+    AIRBYTE_GIT_BRANCH,
 )
 
 
@@ -39,7 +40,7 @@ def patch_connector():
     with open(".python-version", "w") as f:
         f.writelines(["3.9.0"])
 
-    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), "")
+    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), ".")
 
     if os.path.exists("requirements.txt"):
         with fileinput.input(files=["requirements.txt"], inplace=True) as f:
@@ -91,7 +92,11 @@ def install_airbyte_repo():
 
     if not os.path.isdir(AIRBYTE_PROJECT_PATH):
         logging.debug(f"Cloning git repo: {AIRBYTE_GIT_REPOSITORY}")
-        res = subprocess.run(["git", "clone", AIRBYTE_GIT_REPOSITORY], cwd=BUILD_PATH)
+        cmd = ["git", "clone"]
+        if AIRBYTE_GIT_BRANCH:
+            cmd.extend(["-b", AIRBYTE_GIT_BRANCH])
+        cmd.append(AIRBYTE_GIT_REPOSITORY)
+        res = subprocess.run(cmd, cwd=BUILD_PATH)
         logging.debug(f"Cloning git repo complete: {res}")
         if res.returncode > 0:
             raise Exception(f"Failed to install Airbyte project: {AIRBYTE_GIT_REPOSITORY}")
