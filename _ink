@@ -25,7 +25,11 @@ _setup_env() {
       source "${INK_VENV_PATH}/bin/activate"
 
       pip install --upgrade pip
-      pip install -e "${INK_PACKAGE}"
+
+      local cmd=()
+      echo "$INK_PACKAGE" | grep -qE "^(file:|[^:]+$)" && cmd+=(-e)
+      cmd+=("${INK_PACKAGE}")
+      pip install "${cmd[@]}"
     else
       source "${INK_VENV_PATH}/bin/activate"
     fi
