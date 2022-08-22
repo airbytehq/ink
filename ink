@@ -32,6 +32,7 @@ _error() {
 
 _download_inkw() {
   curl -fsSL "${INK_WRAPPER_URL}" -o "${INK_CMDW}" || _error "Invalid URL: ${INK_WRAPPER_URL}"
+  chmod +x "${INK_CMDW}"
 
   echo "Self-Upgraded ($INK_WRAPPER_URL)"
 }
