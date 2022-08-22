@@ -1,11 +1,9 @@
 #!/bin/bash
 
 set -eo pipefail
-
-
-
+set -x
 _error() {
-    echo "$@" 1>&2 && exit 1
+    echo -e "$@" 1>&2 && exit 1
 }
 
 _ensure_branch() {
@@ -15,7 +13,7 @@ _ensure_branch() {
 }
 
 _ensure_clean_tree() {
-  local current_tree=$(git status --porcelain)
+  local current_tree=$(git status --porcelain | grep -v tag.sh)
   [[ -z "$current_tree" ]] || _error "Project tree is not clean\n$current_tree"
 }
 
@@ -32,7 +30,7 @@ cmd_pr() {
   local version=$(poetry version -s)
   local release_branch=release-$version
 
-  git checkout "$release_branch"
+  git checkout -b "$release_branch"
   git commit -am "Bump version"
   git push -u origin "$release_branch"
   gh pr create --title "Release $version" --body ""
