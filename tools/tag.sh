@@ -2,10 +2,8 @@
 
 set -eo pipefail
 
-
-
 _error() {
-    echo "$@" 1>&2 && exit 1
+    echo -e "$@" 1>&2 && exit 1
 }
 
 _ensure_branch() {
@@ -32,10 +30,10 @@ cmd_pr() {
   local version=$(poetry version -s)
   local release_branch=release-$version
 
-  git checkout "$release_branch"
+  git checkout -b "$release_branch"
   git commit -am "Bump version"
   git push -u origin "$release_branch"
-  gh pr create --title "Release $version" --body ""
+  gh pr create --title "Release $version" --body "Releasing $version"
 }
 
 cmd_tag() {
