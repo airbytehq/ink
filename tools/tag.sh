@@ -33,9 +33,9 @@ cmd_pr() {
   local release_branch=release-$version
 
   git checkout "$release_branch"
-  git commit -m "Release $version"
+  git commit -am "Bump version"
   git push -u origin "$release_branch"
-  gh
+  gh pr create --title "Release $version" --body ""
 }
 
 cmd_tag() {
