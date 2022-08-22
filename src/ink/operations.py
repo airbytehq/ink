@@ -1,8 +1,15 @@
-import subprocess
 import os
+import subprocess
 
 from ink.const import PROJECT_FILENAME, PROJECT_PATH
-from ink.tools import install_airbyte_repo, patch_connector, run_generator, run_pip, get_connector_info, build_connector
+from ink.tools import (
+    build_connector,
+    get_connector_info,
+    install_airbyte_repo,
+    patch_connector,
+    run_generator,
+    run_pip,
+)
 
 
 def initialize_project():

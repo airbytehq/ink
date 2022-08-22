@@ -9,13 +9,13 @@ from dataclasses import dataclass
 import yaml
 
 from ink.const import (
+    AIRBYTE_GIT_BRANCH,
     AIRBYTE_GIT_REPOSITORY,
     AIRBYTE_PROJECT_PATH,
     BUILD_DIRNAME,
     BUILD_PATH,
     PROJECT_FILENAME,
     PROJECT_PATH,
-    AIRBYTE_GIT_BRANCH,
 )
 
 

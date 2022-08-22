@@ -3,23 +3,21 @@ import logging
 import click
 
 from ink.operations import (
-    initialize_project,
-    generate_connector,
-    install_dependencies,
-    check_project,
-    format_project,
     build_project,
-    test_project,
-    run_connector,
+    check_project,
     container_run_connector,
-    run_standard_acceptance_tests,
-    publish_connector,
-    encrypt_secrets,
     decrypt_secrets,
+    encrypt_secrets,
+    format_project,
+    generate_connector,
+    initialize_project,
+    install_dependencies,
+    publish_connector,
+    run_connector,
+    run_standard_acceptance_tests,
+    test_project,
 )
-from ink.tools import (
-    patch_connector,
-)
+from ink.tools import patch_connector
 
 
 @click.group()

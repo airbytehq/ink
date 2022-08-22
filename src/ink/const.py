@@ -1,5 +1,6 @@
 import os
 
+
 AIRBYTE_GIT_REPOSITORY = os.environ.get("INK_AIRBYTE_REPOSITORY", "https://github.com/airbytehq/airbyte.git")
 AIRBYTE_GIT_BRANCH = os.environ.get("INK_AIRBYTE_BRANCH", None)
 
