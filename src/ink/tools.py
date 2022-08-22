@@ -1,6 +1,7 @@
 import fileinput
 import logging
 import os
+import re
 import shutil
 import subprocess
 
@@ -9,6 +10,7 @@ from dataclasses import dataclass
 import yaml
 
 from ink.const import (
+    AIRBYTE_GIT_BRANCH,
     AIRBYTE_GIT_REPOSITORY,
     AIRBYTE_PROJECT_PATH,
     BUILD_DIRNAME,
@@ -21,6 +23,16 @@ from ink.const import (
 @dataclass
 class ConnectorInfo:
     connector_name: str
+
+
+def to_kebab_case(s) -> str:
+    return "-".join(
+        re.sub(
+            r"(\s|_|-)+",
+            " ",
+            re.sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+", lambda mo: " " + mo.group(0).lower(), s),
+        ).split()
+    )
 
 
 def get_connector_info() -> ConnectorInfo:
@@ -39,7 +51,7 @@ def patch_connector():
     with open(".python-version", "w") as f:
         f.writelines(["3.9.0"])
 
-    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), "")
+    shutil.copy(os.path.join(AIRBYTE_PROJECT_PATH, "pyproject.toml"), ".")
 
     if os.path.exists("requirements.txt"):
         with fileinput.input(files=["requirements.txt"], inplace=True) as f:
@@ -60,9 +72,9 @@ def patch_connector():
             yaml.safe_dump(yaml_prj, prj)
 
 
-def run_generator():
+def run_generator(generator_type, connector_name):
     generator_path = os.path.join(AIRBYTE_PROJECT_PATH, "airbyte-integrations", "connector-templates", "generator")
-    res = subprocess.run(["./generate.sh"], cwd=generator_path)
+    res = subprocess.run(["./generate.sh", generator_type, connector_name], cwd=generator_path)
     if res.returncode > 0:
         raise Exception("Failed to use connector generator")
 
@@ -91,7 +103,11 @@ def install_airbyte_repo():
 
     if not os.path.isdir(AIRBYTE_PROJECT_PATH):
         logging.debug(f"Cloning git repo: {AIRBYTE_GIT_REPOSITORY}")
-        res = subprocess.run(["git", "clone", AIRBYTE_GIT_REPOSITORY], cwd=BUILD_PATH)
+        cmd = ["git", "clone"]
+        if AIRBYTE_GIT_BRANCH:
+            cmd.extend(["-b", AIRBYTE_GIT_BRANCH])
+        cmd.append(AIRBYTE_GIT_REPOSITORY)
+        res = subprocess.run(cmd, cwd=BUILD_PATH)
         logging.debug(f"Cloning git repo complete: {res}")
         if res.returncode > 0:
             raise Exception(f"Failed to install Airbyte project: {AIRBYTE_GIT_REPOSITORY}")

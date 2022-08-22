@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source="https://github.com/michel-tricot/ink"
 
 RUN \
     apt-get update && \
-    apt-get install -y curl git && \
+    apt-get install -y curl git jq && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip

@@ -2,12 +2,15 @@
 
 set -eo pipefail
 
-[[ -z "$DEBUG" ]] || set -x
+[[ -z "$INK_DEBUG" ]] || set -x
 
-INK_PACKAGE="${INK_PACKAGE:-ink}"
-INK_DOCKER="${INK_DOCKER:-airbyte/ink}"
+DEFAULT_INK_PACKAGE=https://tools.airbyte.com/${INK_VERSION}/ink-${INK_VERSION}.tar.gz
+INK_PACKAGE="${INK_PACKAGE:-${DEFAULT_INK_PACKAGE}}"
 
-VENV_PATH=${VENV_PATH:-.venv}
+DEFAULT_INK_IMAGE=airbyte/ink:${INK_VERSION}
+INK_IMAGE="${INK_IMAGE:-${DEFAULT_INK_IMAGE}}"
+
+INK_VENV_PATH=${INK_VENV_PATH:-.venv}
 
 PYTHON_DEFAULT=$(which python || which python3)
 PYTHON_CMD="${PYTHON_CMD:-${PYTHON_DEFAULT}}"
@@ -17,24 +20,23 @@ _error() {
 }
 
 _setup_env() {
-    if [[ ! -d "${VENV_PATH}" ]]; then
-      "${PYTHON_CMD}" -m venv "${VENV_PATH}"
-      source "${VENV_PATH}/bin/activate"
+    if [[ ! -d "${INK_VENV_PATH}" ]]; then
+      "${PYTHON_CMD}" -m venv "${INK_VENV_PATH}"
+      source "${INK_VENV_PATH}/bin/activate"
 
       pip install --upgrade pip
       pip install -e "${INK_PACKAGE}"
     else
-      source "${VENV_PATH}/bin/activate"
+      source "${INK_VENV_PATH}/bin/activate"
     fi
-
 }
 
 main() {
-    if [[ -z "$USE_INK_DOCKER" ]]; then
+    if [[ -z "$INK_USE_DOCKER" ]]; then
       _setup_env
       ink "$@"
     else
-      docker run --rm -v $(pwd):/stage "$INK_DOCKER" "$@"
+      docker run --rm -v $(pwd):/stage -e INK_IN_DOCKER=1 "$INK_IMAGE" "$@"
     fi
 }
 
