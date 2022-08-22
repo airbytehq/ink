@@ -33,7 +33,7 @@ cmd_pr() {
   git checkout -b "$release_branch"
   git commit -am "Bump version"
   git push -u origin "$release_branch"
-  gh pr create --title "Release $version" --body ""
+  gh pr create --title "Release $version" --body "Releasing $version"
 }
 
 cmd_tag() {
