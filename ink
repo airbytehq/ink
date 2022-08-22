@@ -24,8 +24,6 @@ INK_BASE_URL=${INK_BASE_URL:-https://tools.airbyte.com/${INK_VERSION}}
 INK_WRAPPER_URL=${INK_WRAPPER_URL:-${INK_BASE_URL}/ink}
 INK_URL=${INK_URL:-${INK_BASE_URL}/_ink}
 
-
-
 _error() {
     echo "$@" 1>&2 && exit 1
 }
