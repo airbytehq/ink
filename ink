@@ -19,7 +19,7 @@ if [[ "$INK_VERSION" = latest ]]; then
   INK_VERSION=$(curl -sL "${INK_VERSION_FEED}" | jq -r .tag_name)
 fi
 export INK_VERSION
-INK_BASE_URL=${INK_BASE_URL:-https://tools.airbyte.com/${INK_VERSION}}
+INK_BASE_URL=${INK_BASE_URL:-https://tools.airbyte.com/ink/${INK_VERSION}}
 
 INK_WRAPPER_URL=${INK_WRAPPER_URL:-${INK_BASE_URL}/ink}
 INK_URL=${INK_URL:-${INK_BASE_URL}/_ink}
