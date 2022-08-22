@@ -6,19 +6,24 @@
 [![Latest Version](https://img.shields.io/github/v/release/michel-tricot/ink)](https://github.com/michel-tricot/ink)
 
 
-`Ink` create, build, test and manage your Airbyte connector.
+`ink` create, build, test and manage your Airbyte connector.
 
 ## Introduction
 
+To install `ink`: 
 ```
 CONNECTOR_NAME=my-amazing-connector
-mkdir source-$CONNECTOR_NAME
+mkdir source-$CONNECTOR_NAME 
 cd source-$CONNECTOR_NAME
 curl -fsSLO https://tools.airbyte.com/ink && chmod +x ink
+```
+
+Start using `ink`:
+```
 ./ink init $CONNECTOR_NAME
 ./ink generate --type source-declarative
 ./ink install
-./ink run spec
+./ink --help
 ```
 
 Happy Coding!!
