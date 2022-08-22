@@ -13,16 +13,18 @@ _ensure_branch() {
 }
 
 _ensure_clean_tree() {
-  local current_tree=$(git status --porcelain)
+  local current_tree=$(git status --porcelain | grep -v tag)
   [[ -z "$current_tree" ]] || _error "Project tree is not clean\n$current_tree"
 }
 
-cmd_pr() {
-  _ensure_branch "master"
-
+_prepare() {
+  git checkout master
+  _ensure_branch master
   git pull
   _ensure_clean_tree
+}
 
+cmd_pr() {
   local bump_type=$1; shift || _error "Missing version bump type"
 
   poetry version "${bump_type}"
@@ -37,11 +39,14 @@ cmd_pr() {
 }
 
 cmd_tag() {
-  echo toto
+  local commit_id=$1; shift || _error "Missing commit id to tag"
+
+  git tag $(poetry version -s) "$commit_id"
+  git push --tags
 }
 
 main() {
-
+  _prepare
 
   local cmd=$1; shift || _error "Missing cmd: [pr, tag]"
 
