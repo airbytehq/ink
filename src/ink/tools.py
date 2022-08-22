@@ -24,6 +24,13 @@ class ConnectorInfo:
     connector_name: str
 
 
+def to_kebab_case(s) -> str:
+    return '-'.join(
+        sub(r"(\s|_|-)+", " ",
+            sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+",
+                lambda mo: ' ' + mo.group(0).lower(), s)).split())
+
+
 def get_connector_info() -> ConnectorInfo:
     with open(PROJECT_FILENAME, "r") as f:
         info = yaml.safe_load(f)
@@ -61,9 +68,9 @@ def patch_connector():
             yaml.safe_dump(yaml_prj, prj)
 
 
-def run_generator():
+def run_generator(generator_type, connector_name):
     generator_path = os.path.join(AIRBYTE_PROJECT_PATH, "airbyte-integrations", "connector-templates", "generator")
-    res = subprocess.run(["./generate.sh"], cwd=generator_path)
+    res = subprocess.run(["./generate.sh", generator_type, connector_name], cwd=generator_path)
     if res.returncode > 0:
         raise Exception("Failed to use connector generator")
 

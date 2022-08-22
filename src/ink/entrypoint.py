@@ -2,6 +2,7 @@ import logging
 
 import click
 
+from ink.const import SUPPORTED_GENERATORS
 from ink.operations import (
     build_project,
     check_project,
@@ -31,17 +32,21 @@ def cli(debug):
 
 
 @cli.command(name="init")
-def _init():
+@click.argument("connector_name")
+def _init(connector_name):
     """Initialize Airbyte Connector project"""
 
-    initialize_project()
+    initialize_project(connector_name)
 
 
 @cli.command(name="generate")
-def _generate():
+@click.option(
+    "--type", "generator_type", type=click.Choice(SUPPORTED_GENERATORS.keys()), required=True, help="Type of connector to generate"
+)
+def _generate(generator_type):
     """Generate Airbyte Connector from template"""
 
-    generate_connector()
+    generate_connector(generator_type)
 
 
 @cli.command(name="install")

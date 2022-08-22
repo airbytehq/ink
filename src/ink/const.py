@@ -11,3 +11,8 @@ BUILD_DIRNAME = os.environ.get("INK_BUILD_DIR", "build")
 
 BUILD_PATH = os.path.join(PROJECT_PATH, BUILD_DIRNAME)
 AIRBYTE_PROJECT_PATH = os.environ.get("INK_AIRBYTE_PROJECT_PATH", os.path.join(BUILD_PATH, "airbyte"))
+
+SUPPORTED_GENERATORS = {
+    "source-python": "Python Source",
+    "source-declarative": "Configuration Based Source",
+}

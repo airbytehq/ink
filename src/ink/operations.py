@@ -1,7 +1,9 @@
 import os
 import subprocess
 
-from ink.const import PROJECT_FILENAME, PROJECT_PATH
+import yaml
+
+from ink.const import PROJECT_FILENAME, PROJECT_PATH, SUPPORTED_GENERATORS
 from ink.tools import (
     build_connector,
     get_connector_info,
@@ -9,21 +11,32 @@ from ink.tools import (
     patch_connector,
     run_generator,
     run_pip,
+    ConnectorInfo, to_kebab_case,
 )
 
 
-def initialize_project():
+def initialize_project(name):
     if os.path.isfile(PROJECT_FILENAME):
         raise Exception("Project already initialized")
     install_airbyte_repo()
     patch_connector()
     with open(PROJECT_FILENAME, "w") as f:
-        f.writelines(["{}"])
+        # hack to remove the first line of the yaml file that contains details about the object type
+        yaml.emitter.Emitter.prepare_tag = lambda self, tag: ""
+
+        name = to_kebab_case(name)
+        name = name.removeprefix("source-")
+        name = name.removeprefix("destination-")
+
+        ci = ConnectorInfo(connector_name=name)
+        yaml.dump(ci, f)
 
 
-def generate_connector():
+def generate_connector(generator_type):
     install_airbyte_repo()
-    run_generator()
+
+    connector_info = get_connector_info()
+    run_generator(SUPPORTED_GENERATORS[generator_type], connector_info.connector_name)
     patch_connector()
 
 

@@ -1,5 +1,24 @@
-# Ink
+# Ink: a CLI to build Airbyte Connectors
 
+[![Tests Status](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)
+
+`Ink` create, build, test and manage your Airbyte connector.
+
+is your companion CLI for building Airbyte connectors. 
+
+## Introduction
+
+```
+CONNECTOR_NAME=my-amazing-connector
+mkdir source-$CONNECTOR_NAME
+curl -fsSLO https://tools.airbyte.com/ink && chmod +x ink
+./ink init $CONNECTOR_NAME
+./ink generate --type source-declarative
+./ink install
+./ink run spec
+```
+
+Happy Coding!!
 
 
 ## Release new version
