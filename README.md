@@ -10,6 +10,7 @@
 ```
 CONNECTOR_NAME=my-amazing-connector
 mkdir source-$CONNECTOR_NAME
+cd source-$CONNECTOR_NAME
 curl -fsSLO https://tools.airbyte.com/ink && chmod +x ink
 ./ink init $CONNECTOR_NAME
 ./ink generate --type source-declarative

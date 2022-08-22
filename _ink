@@ -4,8 +4,11 @@ set -eo pipefail
 
 [[ -z "$INK_DEBUG" ]] || set -x
 
-INK_PACKAGE="${INK_PACKAGE:-ink}"
-INK_IMAGE="${INK_IMAGE:-airbyte/ink}"
+DEFAULT_INK_PACKAGE=https://tools.airbyte.com/${INK_VERSION}/ink-${INK_VERSION}.tar.gz
+INK_PACKAGE="${INK_PACKAGE:-${DEFAULT_INK_PACKAGE}}"
+
+DEFAULT_INK_IMAGE=airbyte/ink:${INK_VERSION}
+INK_IMAGE="${INK_IMAGE:-${DEFAULT_INK_IMAGE}}"
 
 INK_VENV_PATH=${INK_VENV_PATH:-.venv}
 
@@ -26,7 +29,6 @@ _setup_env() {
     else
       source "${INK_VENV_PATH}/bin/activate"
     fi
-
 }
 
 main() {

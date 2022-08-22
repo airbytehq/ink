@@ -1,6 +1,7 @@
 import fileinput
 import logging
 import os
+import re
 import shutil
 import subprocess
 
@@ -25,10 +26,13 @@ class ConnectorInfo:
 
 
 def to_kebab_case(s) -> str:
-    return '-'.join(
-        sub(r"(\s|_|-)+", " ",
-            sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+",
-                lambda mo: ' ' + mo.group(0).lower(), s)).split())
+    return "-".join(
+        re.sub(
+            r"(\s|_|-)+",
+            " ",
+            re.sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+", lambda mo: " " + mo.group(0).lower(), s),
+        ).split()
+    )
 
 
 def get_connector_info() -> ConnectorInfo:
