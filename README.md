@@ -1,7 +1,10 @@
 # Ink: a CLI to build Airbyte Connectors
 
+[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/michel-tricot/ink)
 [![Tests Status](https://img.shields.io/github/workflow/status/michel-tricot/ink/build)](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)
 [![Join Our Slack](https://img.shields.io/static/v1?message=Join%20our%20Slack&logo=slack&color=blueviolet&labelColor=grey&label=)](https://slack.airbyte.com)
+[![Latest Version](https://img.shields.io/github/v/release/michel-tricot/ink)](https://github.com/michel-tricot/ink)
+
 
 `Ink` create, build, test and manage your Airbyte connector.
 
