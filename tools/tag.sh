@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eo pipefail
-set -x
+
 _error() {
     echo -e "$@" 1>&2 && exit 1
 }
@@ -13,7 +13,7 @@ _ensure_branch() {
 }
 
 _ensure_clean_tree() {
-  local current_tree=$(git status --porcelain | grep -v tag.sh)
+  local current_tree=$(git status --porcelain)
   [[ -z "$current_tree" ]] || _error "Project tree is not clean\n$current_tree"
 }
 
