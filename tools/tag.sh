@@ -13,7 +13,7 @@ _ensure_branch() {
 }
 
 _ensure_clean_tree() {
-  local current_tree=$(git status --porcelain | grep -v tag)
+  local current_tree=$(git status --porcelain)
   [[ -z "$current_tree" ]] || _error "Project tree is not clean\n$current_tree"
 }
 
