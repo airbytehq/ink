@@ -1,10 +1,9 @@
 # Ink: a CLI to build Airbyte Connectors
 
 [![Tests Status](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)
+[![Join Our Slack](https://img.shields.io/static/v1?message=Join%20our%20Slack&logo=slack&color=blueviolet&labelColor=grey&label=)](https://slack.airbyte.com)
 
 `Ink` create, build, test and manage your Airbyte connector.
-
-is your companion CLI for building Airbyte connectors. 
 
 ## Introduction
 
