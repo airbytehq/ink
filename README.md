@@ -5,8 +5,9 @@
 [![Join Our Slack](https://img.shields.io/static/v1?message=Join%20our%20Slack&logo=slack&color=blueviolet&labelColor=grey&label=)](https://slack.airbyte.com)
 [![Latest Version](https://img.shields.io/github/v/release/michel-tricot/ink)](https://github.com/michel-tricot/ink)
 
+![alt text](./assets/octavia-working.png)
 
-`ink` create, build, test and manage your Airbyte connector.
+`ink` creates, builds, tests and manages your Airbyte connector.
 
 ## Introduction
 
