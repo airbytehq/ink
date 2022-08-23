@@ -89,7 +89,7 @@ def _test(test_args):
     test_project(test_args)
 
 
-@cli.command(name="run")
+@cli.command(name="run", context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1)
 def _run(args):
     """Run Airbyte Connector"""
@@ -97,7 +97,7 @@ def _run(args):
     run_connector(args)
 
 
-@cli.command(name="container_run")
+@cli.command(name="container_run", context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1)
 def _container_run(args):
     """Run Airbyte Connector from a container"""
