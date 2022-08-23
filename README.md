@@ -6,7 +6,7 @@
 [![Latest Version](https://img.shields.io/github/v/release/michel-tricot/ink)](https://github.com/michel-tricot/ink)
 
 
-`ink` create, build, test and manage your Airbyte connector.
+`ink` creates, builds, tests and manages your Airbyte connector.
 
 ## Introduction
 
