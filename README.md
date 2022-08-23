@@ -4,6 +4,7 @@
 [![Tests Status](https://img.shields.io/github/workflow/status/michel-tricot/ink/build)](https://github.com/michel-tricot/ink/workflows/build/badge.svg?branch=master&event=push)
 [![Join Our Slack](https://img.shields.io/static/v1?message=Join%20our%20Slack&logo=slack&color=blueviolet&labelColor=grey&label=)](https://slack.airbyte.com)
 [![Latest Version](https://img.shields.io/github/v/release/michel-tricot/ink)](https://github.com/michel-tricot/ink)
+
 ![alt text](./assets/octavia-working.png)
 
 `ink` creates, builds, tests and manages your Airbyte connector.
