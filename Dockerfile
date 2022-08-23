@@ -2,7 +2,7 @@ ARG PYTHON_VERSION=3.9.0
 
 FROM python:${PYTHON_VERSION}-slim
 
-LABEL org.opencontainers.image.source="https://github.com/michel-tricot/ink"
+LABEL org.opencontainers.image.source="https://github.com/airbytehq/ink"
 
 RUN \
     apt-get update && \
