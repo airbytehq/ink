@@ -23,6 +23,7 @@ Start using `ink`:
 ./ink init $CONNECTOR_NAME
 ./ink generate --type source-declarative
 ./ink install
+./ink run spec
 ./ink --help
 ```
 
