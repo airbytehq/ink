@@ -9,7 +9,7 @@ set +a
 
 [[ -z "$INK_DEBUG" ]] || set -x
 
-INK_VERSION_FEED=https://api.github.com/repos/michel-tricot/ink/releases/latest
+INK_VERSION_FEED=https://api.github.com/repos/airbytehq/ink/releases/latest
 INK_BUILD_DIR="build"
 INK_CMD="$INK_BUILD_DIR/_ink"
 INK_CMDW="ink"
