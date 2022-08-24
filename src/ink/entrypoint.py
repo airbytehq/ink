@@ -47,6 +47,7 @@ def _generate(generator_type):
     """Generate Airbyte Connector from template"""
 
     generate_connector(generator_type)
+    install_dependencies()
 
 
 @cli.command(name="install")

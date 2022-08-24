@@ -19,8 +19,9 @@ from ink.tools import (
 def initialize_project(name):
     if os.path.isfile(PROJECT_FILENAME):
         raise Exception("Project already initialized")
+
     install_airbyte_repo()
-    patch_connector()
+
     with open(PROJECT_FILENAME, "w") as f:
         # hack to remove the first line of the yaml file that contains details about the object type
         yaml.emitter.Emitter.prepare_tag = lambda self, tag: ""
@@ -34,6 +35,9 @@ def initialize_project(name):
 
 
 def generate_connector(generator_type):
+    if not os.path.isfile(PROJECT_FILENAME):
+        raise Exception("Project not initialized, run init first")
+
     install_airbyte_repo()
 
     connector_info = get_connector_info()

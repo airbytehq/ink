@@ -7,7 +7,7 @@ set -eo pipefail
 DEFAULT_INK_PACKAGE=https://tools.airbyte.com/ink/${INK_VERSION}/ink-${INK_VERSION}.tar.gz
 INK_PACKAGE="${INK_PACKAGE:-${DEFAULT_INK_PACKAGE}}"
 
-DEFAULT_INK_IMAGE=airbyte/ink:${INK_VERSION}
+DEFAULT_INK_IMAGE=ghcr.io/airbytehq/ink:${INK_VERSION}
 INK_IMAGE="${INK_IMAGE:-${DEFAULT_INK_IMAGE}}"
 
 INK_VENV_PATH=${INK_VENV_PATH:-.venv}
@@ -21,25 +21,28 @@ _error() {
 
 _setup_env() {
     if [[ ! -d "${INK_VENV_PATH}" ]]; then
+      echo "Setting up environment..."
+
       "${PYTHON_CMD}" -m venv "${INK_VENV_PATH}"
       source "${INK_VENV_PATH}/bin/activate"
 
-      pip install --upgrade pip
+      pip install --quiet --upgrade pip
 
       local cmd=()
       echo "$INK_PACKAGE" | grep -qE "^(file:|[^:]+$)" && cmd+=(-e)
       cmd+=("${INK_PACKAGE}")
-      pip install "${cmd[@]}"
+      pip install --quiet "${cmd[@]}"
     else
       source "${INK_VENV_PATH}/bin/activate"
     fi
 }
 
 main() {
-    if [[ -z "$INK_USE_DOCKER" ]]; then
+    if [[ -z "$INK_USE_DOCKER" || -n "$INK_IN_DOCKER" ]]; then
       _setup_env
       ink "$@"
     else
+      docker pull --quiet "$INK_IMAGE"
       docker run --rm -v $(pwd):/stage -e INK_IN_DOCKER=1 "$INK_IMAGE" "$@"
     fi
 }
