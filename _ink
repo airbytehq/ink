@@ -38,8 +38,6 @@ _setup_env() {
 }
 
 main() {
-    # Disable docker for now. Current setup isn't working.
-    INK_USE_DOCKER=
     if [[ -z "$INK_USE_DOCKER" || -n "$INK_IN_DOCKER" ]]; then
       _setup_env
       ink "$@"
