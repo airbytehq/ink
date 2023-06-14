@@ -103,7 +103,7 @@ def install_airbyte_repo():
 
     if not os.path.isdir(AIRBYTE_PROJECT_PATH):
         logging.debug(f"Cloning git repo: {AIRBYTE_GIT_REPOSITORY}")
-        cmd = ["git", "clone", "-q"]
+        cmd = ["git", "clone", "-q", "--depth", "1"]
         if AIRBYTE_GIT_BRANCH:
             cmd.extend(["-b", AIRBYTE_GIT_BRANCH])
         cmd.append(AIRBYTE_GIT_REPOSITORY)
